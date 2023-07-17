@@ -1,0 +1,38 @@
+version: "3.5"
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: load-balance
+    restart: unless-stopped
+    # working_dir: /app
+    container_name: "app-name"
+    # environment:
+    #   - PORT=8000
+    # volumes:
+    #   - ./:/app
+    # volumes:
+    #   - ./logs:/app/log
+    # ports:
+    #   - 8000:8000
+    #   - 8001:8001
+    #   - 8002:8002
+    #   - 8003:8003
+    # networks:
+    #   - load-balance
+    # command: "pm2 start ecosystem.config.cjs"
+
+  nginx:
+    build: ./nginx
+    container_name: "nginx-balance"
+    image: nginx-balance
+    ports:
+      - 9000:80
+    # networks:
+    #   - load-balance
+
+# networks:
+#   load-balance:
+#     driver: overlay
